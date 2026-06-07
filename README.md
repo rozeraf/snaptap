@@ -42,7 +42,8 @@ install-interception.exe /install
 ```zsh
 x86_64-w64-mingw32-g++ -O2 -std=c++17 -o snaptap.exe snaptap.cpp \
     -lkernel32 -luser32 \
-    -static-libgcc -static-libstdc++
+    -static-libgcc -static-libstdc++ \
+    -Wl,-Bstatic -lwinpthread -Wl,-Bdynamic
 ```
 
 ## Deploy
