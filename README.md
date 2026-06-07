@@ -1,6 +1,6 @@
 # snaptap
 
-Kernel-level snap tap via the Interception driver. Must work with DirectInput and RawInput games.
+Kernel-level snap tap via the Interception driver. Works with DirectInput and RawInput games.
 
 ## How it works
 
@@ -48,9 +48,13 @@ Put these files in one folder on Windows:
 ```
 snaptap.exe
 interception.dll
+libwinpthread-1.dll
 start.bat
 stop.bat
 ```
+
+`libwinpthread-1.dll` is part of the mingw-w64 runtime. On Arch it is at
+`/usr/x86_64-w64-mingw32/bin/libwinpthread-1.dll`.
 
 - `start.bat` - starts snaptap, adds to autostart via Task Scheduler (requires UAC prompt)
 - `stop.bat` - kills process, removes from autostart (requires UAC prompt)
