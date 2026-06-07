@@ -1,2 +1,58 @@
 # snaptap
-A kernel-level cpp implementation of snaptap for ws/ad/leftright/updown keys
+
+Kernel-level snap tap via the Interception driver. Must work with DirectInput and RawInput games.
+
+## How it works
+
+Interception hooks into the keyboard driver stack before any application sees input.
+When two opposing keys are held simultaneously, the older one is released and restored
+on key-up. Pairs are fully independent: holding `Up` does not affect `Left`/`Right` snap tap.
+
+Pairs: `A/D`, `W/S`, `Left/Right`, `Up/Down`.
+
+## Prerequisites
+
+**Linux (build machine)**
+
+- `mingw-w64-gcc` - cross-compiler targeting Windows x86-64
+
+```zsh
+paru -S mingw-w64-gcc
+```
+
+**Windows (target machine)**
+
+- Interception driver installed and system rebooted
+- `interception.dll` next to `snaptap.exe`
+
+Both are from the same release: https://github.com/oblitum/Interception/releases
+
+Install the driver (run as Administrator, then reboot):
+
+```cmd
+install-interception.exe /install
+```
+
+## Build
+
+```zsh
+x86_64-w64-mingw32-g++ -O2 -std=c++17 -o snaptap.exe snaptap.cpp \
+    -lkernel32 -luser32 \
+    -static-libgcc -static-libstdc++
+```
+
+## Deploy
+
+Put these files in one folder on Windows:
+
+```
+snaptap.exe
+interception.dll
+start.bat
+stop.bat
+```
+
+- `start.bat` - starts snaptap, adds to autostart via Task Scheduler (requires UAC prompt)
+- `stop.bat` - kills process, removes from autostart (requires UAC prompt)
+
+The process runs hidden (`--hidden` flag). No tray icon, no console window.
