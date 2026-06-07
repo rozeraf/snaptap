@@ -2,6 +2,10 @@
 
 Kernel-level snap tap via the Interception driver. Works with DirectInput and RawInput games.
 
+> **Warning:** kernel-level input interception may trigger anti-cheat bans in some games.
+> Counter-Strike 2 (VAC + CS2 anti-cheat) is known to flag Interception-based tools.
+> Use at your own risk. Safe for games without kernel anti-cheat.
+
 ## How it works
 
 Interception hooks into the keyboard driver stack before any application sees input.
