@@ -149,7 +149,13 @@ int main(int argc, char** argv)
         uint16_t otherCode = isKeyA ? pair->b     : pair->a;
 
         if (isDown) {
-            if (selfDown) continue;
+            if (selfDown) {
+                // key repeat - дропаем только если противоположная зажата
+                if (otherDown) continue;
+                // иначе пропускаем как обычный repeat
+                ic_send(ctx, dev, &stroke, 1);
+                continue;
+            }
             selfDown = true;
             if (otherDown) sendKey(ctx, dev, otherCode, ext, true);
             ic_send(ctx, dev, &stroke, 1);
